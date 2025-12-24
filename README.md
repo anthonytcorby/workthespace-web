@@ -4,7 +4,8 @@ A premium, high-performance landing page for a football team management app. Bui
 
 ## Features
 
-- **Interactive Tactical Boards**: Hover over the phone to reveal 4-4-2, 4-3-3, and 5-a-side formations.
+- **Interactive Team Dashboard**: Premium squad management view with real-time stats.
+- **Advanced Tactics Board**: 11v11 interactive pitch with standard 105:68 proportions and draggable player nodes.
 - **Stadium Glow Aesthetics**: Custom animations and gradients for a premium sports broadcast feel.
 - **Next.js App Router**: Optimized for performance and SEO.
 - **Responsive Design**: Fully optimized for mobile and iOS devices.
