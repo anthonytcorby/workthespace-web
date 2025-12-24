@@ -4,7 +4,7 @@ import { CalendarCheck, MapPin, Wallet, BarChart3, CheckSquare } from 'lucide-re
 
 export function FeatureGrid() {
     return (
-        <section className="py-24 relative">
+        <section className="py-24 relative section-visibility">
             <Container>
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">

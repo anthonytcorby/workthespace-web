@@ -6,12 +6,15 @@ import Image from 'next/image';
 export function Hero() {
     return (
         <section className="relative h-[100svh] pt-24 pb-20 flex items-center overflow-hidden bg-black safe-top">
-            {/* Main Background Image - DEBUG MODE: Standard img tag, no gradients */}
-            <div className="absolute inset-0 z-0">
-                <img
+            {/* Main Background Image - Optimized with Next.js Image */}
+            <div className="absolute inset-0 z-0 gpu-accelerated">
+                <Image
                     src="/hero-bg-new.png"
                     alt="Stadium Atmosphere"
-                    className="w-full h-full object-cover opacity-100"
+                    fill
+                    priority
+                    quality={90}
+                    className="object-cover opacity-100"
                 />
             </div>
 

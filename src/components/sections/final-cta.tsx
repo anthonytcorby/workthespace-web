@@ -4,7 +4,7 @@ import { Gamepad2, Trello } from 'lucide-react';
 
 export function FinalCTA() {
     return (
-        <section className="relative py-32 overflow-hidden flex items-center justify-center">
+        <section className="relative py-32 overflow-hidden flex items-center justify-center section-visibility">
             {/* Background glow center */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-wts-green/5 blur-[120px] rounded-full point-events-none" />
 

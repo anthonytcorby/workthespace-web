@@ -9,7 +9,7 @@ export function Timeline() {
     ];
 
     return (
-        <section className="py-24 overflow-hidden">
+        <section className="py-24 overflow-hidden section-visibility">
             <Container>
                 <div className="text-center mb-16">
                     <span className="text-wts-green text-xs font-bold tracking-widest uppercase mb-2 block font-outfit">MATCHDAY EXPERIENCE</span>

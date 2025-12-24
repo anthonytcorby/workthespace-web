@@ -109,14 +109,17 @@ body {
 
 .animate-float-magical {
   animation: float-magical 8s ease-in-out infinite;
+  will-change: transform;
 }
 
 .animate-float-magical-delayed {
   animation: float-magical 9s ease-in-out 2s infinite reverse;
+  will-change: transform;
 }
 
 .animate-float-figure8 {
   animation: float-figure-8 10s ease-in-out infinite;
+  will-change: transform;
 }
 
 @keyframes stadium-glow {
@@ -150,11 +153,13 @@ body {
 .animate-stadium-glow {
   color: white;
   animation: stadium-glow 4s ease-in-out infinite;
+  will-change: text-shadow, opacity;
 }
 
 .animate-stadium-glow-green {
   color: #00ff41;
   animation: stadium-glow-green 4s ease-in-out infinite;
+  will-change: text-shadow, opacity;
 }
 
 @keyframes fade-in-up {
@@ -171,6 +176,7 @@ body {
 
 .animate-fade-in-up {
   animation: fade-in-up 0.8s ease-out forwards;
+  will-change: transform, opacity;
 }
 
 /* Delay Utlities */
@@ -192,4 +198,16 @@ body {
 
 .delay-500 {
   animation-delay: 500ms;
+}
+
+/* Optimization for off-screen rendering */
+.section-visibility {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 5000px;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
 }
