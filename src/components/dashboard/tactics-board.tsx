@@ -87,81 +87,84 @@ export function TacticsBoard() {
             </div>
 
             {/* The Pitch Container */}
-            <div
-                ref={containerRef}
-                className="relative flex-1 bg-[#0A120A] rounded-2xl border border-white/5 overflow-hidden shadow-2xl touch-none select-none group/pitch"
-                onPointerMove={handlePointerMove}
-                onPointerUp={handlePointerUp}
-                onPointerLeave={handlePointerUp}
-            >
-                {/* Global Pitch Texture */}
-                <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:32px_32px]" />
+            <div className="flex-1 flex items-center justify-center min-h-0 relative">
+                <div
+                    ref={containerRef}
+                    className="relative h-full aspect-[68/105] bg-[#0A120A] rounded-2xl border border-white/5 overflow-hidden shadow-2xl touch-none select-none group/pitch"
+                    onPointerMove={handlePointerMove}
+                    onPointerUp={handlePointerUp}
+                    onPointerLeave={handlePointerUp}
+                >
+                    {/* Global Pitch Texture */}
+                    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:32px_32px]" />
 
-                {/* SVG Pitch Markings */}
-                <svg className="absolute inset-0 w-full h-full p-4 pointer-events-none stroke-white/20 fill-none" viewBox="0 0 100 140" preserveAspectRatio="none">
-                    {/* Pitch Boundary */}
-                    <rect x="2" y="2" width="96" height="136" rx="2" strokeWidth="0.5" />
+                    {/* SVG Pitch Markings */}
+                    <svg className="absolute inset-0 w-full h-full p-4 pointer-events-none stroke-white/20 fill-none" viewBox="0 0 68 105" preserveAspectRatio="none">
+                        {/* Pitch Boundary */}
+                        <rect x="2" y="2" width="64" height="101" rx="2" strokeWidth="0.5" />
 
-                    {/* Halfway Line & Circle */}
-                    <line x1="2" y1="70" x2="98" y2="70" strokeWidth="0.5" />
-                    <circle cx="50" cy="70" r="10" strokeWidth="0.5" />
-                    <circle cx="50" cy="70" r="0.5" fill="currentColor" />
+                        {/* Halfway Line & Circle */}
+                        <line x1="2" y1="52.5" x2="66" y2="52.5" strokeWidth="0.5" />
+                        <circle cx="34" cy="52.5" r="9.15" strokeWidth="0.5" />
+                        <circle cx="34" cy="52.5" r="0.5" fill="currentColor" />
 
-                    {/* Penalty Areas (Top) */}
-                    <path d="M25,2 L25,22 L75,22 L75,2" strokeWidth="0.5" />
-                    <path d="M38,2 L38,8 L62,8 L62,2" strokeWidth="0.5" />
-                    <path d="M40,22 Q50,30 60,22" strokeWidth="0.5" />
-                    <circle cx="50" cy="15" r="0.5" fill="currentColor" />
+                        {/* Penalty Areas (Top) */}
+                        <rect x="13.8" y="2" width="40.4" height="16.5" strokeWidth="0.5" />
+                        <rect x="24.8" y="2" width="18.4" height="5.5" strokeWidth="0.5" />
+                        <path d="M27.5,18.5 Q34,25 40.5,18.5" strokeWidth="0.5" />
+                        <circle cx="34" cy="11" r="0.5" fill="currentColor" />
 
-                    {/* Penalty Areas (Bottom) */}
-                    <path d="M25,138 L25,118 L75,118 L75,138" strokeWidth="0.5" />
-                    <path d="M38,138 L38,132 L62,132 L62,138" strokeWidth="0.5" />
-                    <path d="M40,118 Q50,110 60,118" strokeWidth="0.5" />
-                    <circle cx="50" cy="125" r="0.5" fill="currentColor" />
+                        {/* Penalty Areas (Bottom) */}
+                        <rect x="13.8" y="86.5" width="40.4" height="16.5" strokeWidth="0.5" />
+                        <rect x="24.8" y="97.5" width="18.4" height="5.5" strokeWidth="0.5" />
+                        <path d="M27.5,86.5 Q34,80 40.5,86.5" strokeWidth="0.5" />
+                        <circle cx="34" cy="94" r="0.5" fill="currentColor" />
 
-                    {/* Corner Arcs */}
-                    <path d="M2,5 Q5,5 5,2" strokeWidth="0.5" />
-                    <path d="M98,5 Q95,5 95,2" strokeWidth="0.5" />
-                    <path d="M2,135 Q5,135 5,138" strokeWidth="0.5" />
-                    <path d="M98,135 Q95,135 95,138" strokeWidth="0.5" />
-                </svg>
+                        {/* Corner Arcs */}
+                        <path d="M2,3 Q3,3 3,2" strokeWidth="0.5" />
+                        <path d="M66,3 Q65,3 65,2" strokeWidth="0.5" />
+                        <path d="M2,102 Q3,102 3,103" strokeWidth="0.5" />
+                        <path d="M66,102 Q65,102 65,103" strokeWidth="0.5" />
+                    </svg>
 
-                {/* Player Nodes */}
-                {players.map((player) => (
-                    <div
-                        key={player.id}
-                        className={`absolute w-10 h-10 -ml-5 -mt-5 flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform duration-75 ${draggingId === player.id ? 'z-50 scale-125' : 'z-20'}`}
-                        style={{
-                            left: `${player.x}%`,
-                            top: `${player.y}%`,
-                            touchAction: 'none'
-                        }}
-                        onPointerDown={() => handlePointerDown(player.id)}
-                    >
-                        {/* Player Glow */}
-                        <div className={`absolute inset-0 rounded-full blur-[8px] opacity-40 ${player.role === 'GK' ? 'bg-yellow-400' : 'bg-wts-green'}`} />
+                    {/* Player Nodes */}
+                    {players.map((player) => (
+                        <div
+                            key={player.id}
+                            className={`absolute w-10 h-10 -ml-5 -mt-5 flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform duration-75 ${draggingId === player.id ? 'z-50 scale-125' : 'z-20'}`}
+                            style={{
+                                left: `${player.x}%`,
+                                top: `${player.y}%`,
+                                touchAction: 'none'
+                            }}
+                            onPointerDown={() => handlePointerDown(player.id)}
+                        >
+                            {/* Player Glow */}
+                            <div className={`absolute inset-0 rounded-full blur-[8px] opacity-40 ${player.role === 'GK' ? 'bg-yellow-400' : 'bg-wts-green'}`} />
 
-                        {/* Player Circle */}
-                        <div className={`relative w-8 h-8 rounded-full border-2 border-black flex items-center justify-center shadow-lg transition-colors ${player.role === 'GK' ? 'bg-yellow-400 text-black' : 'bg-wts-green text-black'} ${draggingId === player.id ? 'ring-2 ring-white border-none' : ''}`}>
-                            <span className="text-[10px] font-black">{player.number}</span>
+                            {/* Player Number Circle */}
+                            <div className={`relative w-9 h-9 rounded-full border-2 border-black flex items-center justify-center shadow-lg transition-transform ${player.role === 'GK' ? 'bg-yellow-400 text-black' : 'bg-wts-green text-black'} ${draggingId === player.id ? 'ring-2 ring-white border-none' : ''}`}>
+                                <span className="text-xs font-black">{player.number}</span>
+                            </div>
+
+                            {/* Player Name Tag */}
+                            <div className="absolute -bottom-8 whitespace-nowrap px-3 py-1 bg-black/90 backdrop-blur-xl rounded-md border border-white/10 shadow-2xl pointer-events-none transition-opacity opacity-0 group-hover/pitch:opacity-100 flex flex-col items-center">
+                                <span className="text-[10px] font-black text-white uppercase tracking-[0.15em]">{player.name}</span>
+                                <span className="text-[7px] font-bold text-gray-400 uppercase tracking-widest">{player.role}</span>
+                            </div>
                         </div>
+                    ))}
 
-                        {/* Player Name Tag */}
-                        <div className="absolute -bottom-6 whitespace-nowrap px-2 py-0.5 bg-black/80 backdrop-blur-md rounded border border-white/10 shadow-xl pointer-events-none transition-opacity opacity-0 group-hover/pitch:opacity-100">
-                            <span className="text-[8px] font-bold text-white uppercase tracking-widest">{player.name}</span>
+                    {/* Tactics Ticker / Info Overlay */}
+                    <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none">
+                        <div className="bg-black/80 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-full shadow-2xl">
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Formation: </span>
+                            <span className="text-[10px] font-black text-wts-green uppercase tracking-[0.2em]">Custom 4-4-2</span>
                         </div>
-                    </div>
-                ))}
-
-                {/* Tactics Ticker / Info Overlay */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between pointer-events-none">
-                    <div className="bg-black/60 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
-                        <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Formation: </span>
-                        <span className="text-[8px] font-bold text-wts-green uppercase tracking-widest">Custom 4-4-2</span>
-                    </div>
-                    <div className="bg-black/60 backdrop-blur-md border border-white/10 px-4 py-2 rounded-full">
-                        <span className="text-[8px] font-bold text-gray-500 uppercase tracking-widest">Active Players: </span>
-                        <span className="text-[8px] font-bold text-white uppercase tracking-widest">11 / 11</span>
+                        <div className="bg-black/80 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-full shadow-2xl">
+                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Active Players: </span>
+                            <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">11 / 11</span>
+                        </div>
                     </div>
                 </div>
             </div>
