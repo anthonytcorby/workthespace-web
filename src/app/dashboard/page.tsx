@@ -2,6 +2,7 @@
 
 import { Container } from '@/components/ui/container';
 import { Trophy, Users, Wallet, Calendar, AlertCircle, ArrowUpRight } from 'lucide-react';
+import { TacticsBoard } from '@/components/dashboard/tactics-board';
 
 export default function DashboardPage() {
     return (
@@ -50,115 +51,92 @@ export default function DashboardPage() {
                 />
             </div>
 
-            {/* Main Area: Next Match & Tactical Focus */}
-            <div className="grid lg:grid-cols-3 gap-8">
-                {/* Next Match Card */}
-                <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-black/40 border border-white/5 rounded-2xl overflow-hidden group hover:border-wts-green/30 transition-all">
-                        <div className="p-6 md:p-8 flex items-center justify-between border-b border-white/5">
-                            <div className="flex items-center space-x-4">
-                                <div className="p-3 bg-wts-green/10 rounded-xl">
-                                    <Calendar className="text-wts-green w-6 h-6" />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-lg uppercase tracking-tight text-white">Next Fixture</h3>
-                                    <p className="text-xs text-gray-500 font-mono tracking-widest uppercase">Premier League · Week 12</p>
-                                </div>
+            {/* Dashboard Main View */}
+            <div className="grid lg:grid-cols-4 gap-8 items-start">
+
+                {/* Left Side: Stats & Details (1 Column) */}
+                <div className="lg:col-span-1 space-y-6 order-2 lg:order-1">
+                    <div className="bg-black/40 border border-white/5 rounded-2xl overflow-hidden p-6 group hover:border-wts-green/30 transition-all">
+                        <div className="flex items-center space-x-3 mb-6">
+                            <div className="p-2 bg-wts-green/10 rounded-lg">
+                                <Calendar className="text-wts-green w-5 h-5" />
                             </div>
-                            <span className="px-3 py-1 bg-red-500/10 text-red-500 border border-red-500/20 rounded-full text-[10px] font-bold tracking-widest">URGENT INFO</span>
+                            <h3 className="font-bold text-sm uppercase tracking-widest text-white">NEXT FIXTURE</h3>
                         </div>
 
-                        <div className="p-6 md:p-8">
-                            <div className="flex flex-col md:flex-row items-center justify-between gap-8 mb-8">
-                                <div className="flex items-center space-x-4 text-center md:text-left">
-                                    <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-white font-bold text-2xl border border-white/10 italic">WTS</div>
-                                    <div>
-                                        <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-1">HOME</p>
-                                        <h4 className="text-2xl font-display font-bold text-white italic">WORKTHESPACE FC</h4>
-                                    </div>
+                        <div className="space-y-6">
+                            <div className="flex items-center justify-between">
+                                <div className="text-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-xs font-bold italic mb-2">WTS</div>
+                                    <p className="text-[8px] font-bold text-gray-500 uppercase tracking-widest leading-tight">WORKTHESPACE</p>
                                 </div>
-
-                                <div className="flex flex-col items-center">
-                                    <span className="text-4xl font-display font-bold italic text-wts-green mb-1 animate-pulse">VS</span>
-                                    <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-[10px] font-bold tracking-widest uppercase">19:30 KO</div>
-                                </div>
-
-                                <div className="flex items-center space-x-4 flex-row-reverse md:flex-row text-center md:text-right">
-                                    <div className="md:text-right">
-                                        <p className="text-sm font-bold uppercase tracking-widest text-gray-400 mb-1">AWAY</p>
-                                        <h4 className="text-2xl font-display font-bold text-white italic">TECH UNITED</h4>
-                                    </div>
-                                    <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center text-white font-bold text-2xl border border-white/10 italic">TU</div>
+                                <span className="text-xs font-bold text-wts-green italic">VS</span>
+                                <div className="text-center">
+                                    <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center border border-white/10 text-xs font-bold italic mb-2">TU</div>
+                                    <p className="text-[8px] font-bold text-gray-500 uppercase tracking-widest leading-tight">TECH UNITED</p>
                                 </div>
                             </div>
 
-                            <div className="grid md:grid-cols-3 gap-4">
-                                <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">VENUE</p>
-                                    <p className="text-xs font-bold text-white">Powerleague Central, Pitch 4</p>
+                            <div className="space-y-3 pt-4 border-t border-white/5">
+                                <div className="flex justify-between items-center">
+                                    <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Kick Off</span>
+                                    <span className="text-[9px] font-bold text-white">19:30 Tuesday</span>
                                 </div>
-                                <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">ORGANISER</p>
-                                    <p className="text-xs font-bold text-white">Anthony Corby (The Gaffer)</p>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Pitch</span>
+                                    <span className="text-[9px] font-bold text-white">Pitch 4, PL Central</span>
                                 </div>
-                                <div className="p-4 bg-white/5 rounded-xl border border-white/5">
-                                    <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1">STATUS</p>
-                                    <p className="text-xs font-bold text-wts-green flex items-center space-x-1">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-wts-green animate-pulse" />
-                                        <span>CONFIRMED</span>
-                                    </p>
+                                <div className="flex justify-between items-center">
+                                    <span className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">Status</span>
+                                    <span className="text-[9px] font-bold text-wts-green animate-pulse">MATCH ON</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Tactical Focus Area */}
-                <div className="space-y-6">
-                    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 relative overflow-hidden group hover:border-blue-500/30 transition-all">
-                        <div className="flex items-center justify-between mb-6">
-                            <h3 className="font-bold uppercase tracking-widest text-sm text-gray-400">Tactical Setup</h3>
-                            <button className="text-gray-600 hover:text-white transition-colors">
-                                <ArrowUpRight size={18} />
-                            </button>
-                        </div>
-
-                        {/* Mini Tactical Pitch */}
-                        <div className="aspect-[3/4] bg-black/60 rounded-xl border border-white/10 p-4 relative mb-4">
-                            <svg className="w-full h-full opacity-30" viewBox="0 0 100 140">
-                                <rect x="5" y="5" width="90" height="130" rx="5" fill="none" stroke="white" strokeWidth="1" />
-                                <circle cx="50" cy="70" r="10" fill="none" stroke="white" strokeWidth="1" />
-                                <line x1="5" y1="70" x2="95" y2="70" stroke="white" strokeWidth="1" />
-                                <g className="fill-blue-500">
-                                    <circle cx="50" cy="125" r="4" className="fill-yellow-400" />
-                                    <circle cx="30" cy="95" r="4" /> <circle cx="70" cy="95" r="4" />
-                                    <circle cx="50" cy="65" r="4" />
-                                    <circle cx="50" cy="35" r="4" className="animate-pulse" />
-                                </g>
-                            </svg>
-                            <div className="absolute inset-x-0 bottom-4 text-center">
-                                <p className="text-[10px] font-bold text-blue-400 font-mono tracking-widest">5-A-SIDE DIAMOND</p>
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between text-xs">
-                                <span className="text-gray-500 uppercase font-bold">Formation</span>
-                                <span className="text-white font-bold">2-1-1</span>
-                            </div>
-                            <div className="flex items-center justify-between text-xs">
-                                <span className="text-gray-500 uppercase font-bold">Style</span>
-                                <span className="text-white font-bold">High Press</span>
-                            </div>
+                    <div className="bg-black/40 border border-white/5 rounded-2xl p-6 hover:border-wts-green/30 transition-all">
+                        <h3 className="font-bold text-[10px] uppercase tracking-[0.2em] text-gray-500 mb-4 px-1">Squad Presence</h3>
+                        <div className="space-y-3">
+                            {[
+                                { name: 'A. Corby', status: 'In', role: 'Captain' },
+                                { name: 'M. Richards', status: 'In', role: 'CB' },
+                                { name: 'J. Smith', status: 'Out', role: 'ST' },
+                                { name: 'D. Vieri', status: 'Pending', role: 'LW' },
+                            ].map((p, i) => (
+                                <div key={i} className="flex items-center justify-between bg-white/5 rounded-lg p-2 px-3 border border-white/5">
+                                    <div className="flex items-center space-x-3">
+                                        <div className={`w-1.5 h-1.5 rounded-full ${p.status === 'In' ? 'bg-wts-green' : p.status === 'Out' ? 'bg-red-500' : 'bg-yellow-500'}`} />
+                                        <span className="text-[10px] font-bold text-white">{p.name}</span>
+                                    </div>
+                                    <span className="text-[8px] font-bold text-gray-600 uppercase tracking-widest">{p.role}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </div>
+
+                {/* Center: Interactive Tactics Board (3 Columns) */}
+                <div className="lg:col-span-3 h-[750px] order-1 lg:order-2">
+                    <div className="h-full bg-black/40 border border-white/5 rounded-3xl p-4 md:p-6 shadow-2xl relative overflow-hidden">
+                        <TacticsBoard />
+                    </div>
+                </div>
+
             </div>
         </div>
     );
 }
 
-function StatCard({ label, value, sub, icon: Icon, alert = false, color = "text-white" }) {
+interface StatCardProps {
+    label: string;
+    value: string;
+    sub: string;
+    icon: any;
+    alert?: boolean;
+    color?: string;
+}
+
+function StatCard({ label, value, sub, icon: Icon, alert = false, color = "text-white" }: StatCardProps) {
     return (
         <div className="bg-black/40 border border-white/5 rounded-2xl p-5 hover:border-white/10 transition-colors group relative overflow-hidden">
             {alert && (
