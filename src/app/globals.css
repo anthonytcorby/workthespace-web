@@ -1,0 +1,126 @@
+/* Force rebuild */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 5, 13, 5;
+  --background-end-rgb: 0, 0, 0;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+  min-height: 100vh;
+}
+
+/* Custom Utilities for the specific "Gaffer" look */
+.text-glow {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+
+.box-glow {
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+@keyframes float-magical {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  25% {
+    transform: translate(5px, -8px);
+  }
+
+  50% {
+    transform: translate(0, -15px);
+  }
+
+  75% {
+    transform: translate(-5px, -8px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* More complex figure-8 like movement */
+@keyframes float-figure-8 {
+  0% {
+    transform: translate(0px, 0px);
+  }
+
+  20% {
+    transform: translate(6px, -4px);
+  }
+
+  40% {
+    transform: translate(0px, -8px);
+  }
+
+  60% {
+    transform: translate(-6px, -4px);
+  }
+
+  80% {
+    transform: translate(0px, 0px);
+  }
+
+  100% {
+    transform: translate(0px, 0px);
+  }
+}
+
+.animate-float-magical {
+  animation: float-magical 8s ease-in-out infinite;
+}
+
+.animate-float-magical-delayed {
+  animation: float-magical 9s ease-in-out 2s infinite reverse;
+}
+
+.animate-float-figure8 {
+  animation: float-figure-8 10s ease-in-out infinite;
+}
+
+@keyframes stadium-glow {
+
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+    opacity: 0.9;
+  }
+
+  50% {
+    text-shadow: 0 0 25px rgba(255, 255, 255, 0.3), 0 0 50px rgba(255, 255, 255, 0.1);
+    opacity: 1;
+  }
+}
+
+@keyframes stadium-glow-green {
+
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+    opacity: 0.9;
+  }
+
+  50% {
+    text-shadow: 0 0 30px rgba(0, 255, 65, 0.5), 0 0 60px rgba(0, 255, 65, 0.2);
+    opacity: 1;
+  }
+}
+
+.animate-stadium-glow {
+  color: white;
+  animation: stadium-glow 4s ease-in-out infinite;
+}
+
+.animate-stadium-glow-green {
+  color: #00ff41;
+  animation: stadium-glow-green 4s ease-in-out infinite;
+}
