@@ -35,7 +35,7 @@ export function Navbar() {
                     {/* Desktop Actions */}
                     <div className="hidden md:flex items-center space-x-4">
                         <Link
-                            href="#"
+                            href="/login"
                             className="text-xs font-bold tracking-widest text-gray-400 hover:text-white transition-colors uppercase font-outfit"
                         >
                             LOG IN
@@ -70,7 +70,7 @@ export function Navbar() {
                     ))}
                     <div className="w-12 h-px bg-white/10 my-4" />
                     <Link
-                        href="#"
+                        href="/login"
                         className="text-sm font-bold tracking-widest text-gray-400 uppercase font-outfit"
                         onClick={() => setIsMenuOpen(false)}
                     >
