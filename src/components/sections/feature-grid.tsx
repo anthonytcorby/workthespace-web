@@ -27,7 +27,7 @@ export function FeatureGrid() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
                     {/* Card 1: Availability (Wide) */}
-                    <div className="md:col-span-2 bg-[#0A120A] rounded-2xl p-6 md:p-8 border border-white/5 relative group overflow-hidden hover:border-wts-green/30 transition-colors">
+                    <div className="md:col-span-2 bg-[#0A120A] rounded-2xl p-6 md:p-8 border border-white/5 relative group overflow-hidden hover:border-wts-green/30 transition-colors opacity-0 animate-fade-in-up">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-wts-green/5 rounded-full blur-[80px] -mr-16 -mt-16 transition-opacity group-hover:opacity-100 opacity-50" />
                         <div className="relative z-10 space-y-6">
                             <div className="w-10 h-10 rounded bg-wts-green flex items-center justify-center text-black">
@@ -43,7 +43,7 @@ export function FeatureGrid() {
                     </div>
 
                     {/* Card 2: Match Fees (Tall) */}
-                    <div className="md:col-span-1 md:row-span-2 bg-[#0A120A] rounded-2xl p-6 md:p-8 border border-white/5 relative overflow-hidden flex flex-col justify-between">
+                    <div className="md:col-span-1 md:row-span-2 bg-[#0A120A] rounded-2xl p-6 md:p-8 border border-white/5 relative overflow-hidden flex flex-col justify-between opacity-0 animate-fade-in-up delay-100">
                         <div className="space-y-6 relative z-10">
                             <div className="w-10 h-10 rounded bg-[#1a2e1a] text-wts-green flex items-center justify-center border border-wts-green/20">
                                 <Wallet size={20} />
@@ -81,7 +81,7 @@ export function FeatureGrid() {
                     </div>
 
                     {/* Card 3: Pitch */}
-                    <div className="bg-[#0A120A] rounded-2xl p-8 border border-white/5 relative hover:border-wts-green/30 transition-colors">
+                    <div className="bg-[#0A120A] rounded-2xl p-8 border border-white/5 relative hover:border-wts-green/30 transition-colors opacity-0 animate-fade-in-up delay-200">
                         <div className="space-y-4">
                             <div className="w-8 h-8 rounded bg-[#1a2e1a] text-wts-green flex items-center justify-center border border-wts-green/20">
                                 <MapPin size={16} />
@@ -94,7 +94,7 @@ export function FeatureGrid() {
                     </div>
 
                     {/* Card 4: Stats */}
-                    <div className="bg-[#0A120A] rounded-2xl p-8 border border-white/5 relative hover:border-wts-green/30 transition-colors">
+                    <div className="bg-[#0A120A] rounded-2xl p-8 border border-white/5 relative hover:border-wts-green/30 transition-colors opacity-0 animate-fade-in-up delay-300">
                         <div className="space-y-4">
                             <div className="w-8 h-8 rounded bg-[#1a2e1a] text-wts-green flex items-center justify-center border border-wts-green/20">
                                 <BarChart3 size={16} />

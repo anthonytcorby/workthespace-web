@@ -18,8 +18,12 @@ export function Timeline() {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-2">
-                    {steps.map((step) => (
-                        <div key={step.num} className="group relative h-[250px] md:h-[400px] border border-white/10 rounded-lg overflow-hidden cursor-crosshair">
+                    {steps.map((step, i) => (
+                        <div
+                            key={step.num}
+                            style={{ animationDelay: `${(i + 1) * 100}ms` }}
+                            className="group relative h-[250px] md:h-[400px] border border-white/10 rounded-lg overflow-hidden cursor-crosshair opacity-0 animate-fade-in-up"
+                        >
                             {/* Background placeholder - would be images in real app */}
                             <div className={`absolute inset-0 opacity-20 group-hover:opacity-40 transition-opacity ${step.image}`}></div>
 

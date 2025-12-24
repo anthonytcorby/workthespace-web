@@ -8,7 +8,7 @@ export function FinalCTA() {
             {/* Background glow center */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-wts-green/5 blur-[120px] rounded-full point-events-none" />
 
-            <Container className="relative z-10 text-center">
+            <Container className="relative z-10 text-center opacity-0 animate-fade-in-up">
                 {/* Icon */}
                 <div className="flex justify-center mb-8">
                     <div className="w-16 h-16 rounded-2xl bg-[#0A120A] border border-wts-green flex items-center justify-center shadow-[0_0_30px_rgba(0,255,65,0.2)]">

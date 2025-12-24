@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export function Hero() {
     return (
-        <section className="relative h-[100svh] pt-24 pb-20 flex items-center overflow-hidden bg-black">
+        <section className="relative h-[100svh] pt-24 pb-20 flex items-center overflow-hidden bg-black safe-top">
             {/* Main Background Image - DEBUG MODE: Standard img tag, no gradients */}
             <div className="absolute inset-0 z-0">
                 <img
@@ -144,7 +144,7 @@ export function Hero() {
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 bg-wts-green/20 blur-[60px] md:blur-[100px] rounded-full" />
 
                         {/* TACTICS REVEAL: 5-A-SIDE (Top-Left) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[300px] z-0 opacity-0 group-hover:opacity-100 group-hover:-translate-x-[400px] group-hover:-translate-y-[320px] group-hover:rotate-[-15deg] transition-all duration-700 ease-out delay-200 pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[300px] z-0 opacity-0 -translate-x-[100px] -translate-y-[300px] rotate-[-5deg] animate-fade-in-up delay-100 md:animate-none md:opacity-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rotate-0 md:group-hover:opacity-100 md:group-hover:-translate-x-[400px] md:group-hover:-translate-y-[320px] md:group-hover:rotate-[-15deg] transition-all duration-700 ease-out md:delay-200 pointer-events-none">
                             <div className="w-full h-full animate-float-magical">
                                 <div className="w-full h-full bg-black/80 backdrop-blur-sm border border-wts-green/30 rounded-xl p-3 transform scale-90 shadow-2xl">
                                     <svg className="w-full h-full" viewBox="0 0 100 140">
@@ -170,7 +170,7 @@ export function Hero() {
                         </div>
 
                         {/* TACTICS REVEAL: 4-4-2 (Left) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] z-0 opacity-0 group-hover:opacity-100 group-hover:-translate-x-[450px] group-hover:-translate-y-[20px] group-hover:rotate-[-12deg] transition-all duration-700 ease-out pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] z-0 opacity-0 -translate-x-[180px] -translate-y-[20px] rotate-[-8deg] animate-fade-in-up delay-200 md:animate-none md:opacity-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rotate-0 md:group-hover:opacity-100 md:group-hover:-translate-x-[450px] md:group-hover:-translate-y-[20px] md:group-hover:rotate-[-12deg] transition-all duration-700 ease-out pointer-events-none">
                             <div className="w-full h-full animate-float-figure8">
                                 <div className="w-full h-full bg-black/80 backdrop-blur-sm border border-wts-green/30 rounded-xl p-4 transform scale-90">
                                     <svg className="w-full h-full" viewBox="0 0 100 140">
@@ -196,7 +196,7 @@ export function Hero() {
                         </div>
 
                         {/* TACTICS REVEAL: 4-3-3 (Right) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] z-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-[160px] group-hover:-translate-y-[280px] group-hover:rotate-[12deg] transition-all duration-700 ease-out delay-100 pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[400px] z-0 opacity-0 translate-x-[80px] -translate-y-[300px] rotate-[8deg] animate-fade-in-up delay-300 md:animate-none md:opacity-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rotate-0 md:group-hover:opacity-100 md:group-hover:translate-x-[160px] md:group-hover:-translate-y-[280px] md:group-hover:rotate-[12deg] transition-all duration-700 ease-out md:delay-100 pointer-events-none">
                             <div className="w-full h-full animate-float-magical-delayed">
                                 <div className="w-full h-full bg-black/80 backdrop-blur-sm border border-wts-green/30 rounded-xl p-4 transform scale-90">
                                     <svg className="w-full h-full" viewBox="0 0 100 140">
@@ -222,7 +222,7 @@ export function Hero() {
                         </div>
 
                         {/* TACTICS REVEAL: 5-A-SIDE (Top-Right) */}
-                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[300px] z-0 opacity-0 group-hover:opacity-100 group-hover:translate-x-[400px] group-hover:-translate-y-[20px] group-hover:rotate-[15deg] transition-all duration-700 ease-out delay-300 pointer-events-none">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[220px] h-[300px] z-0 opacity-0 translate-x-[120px] translate-y-[20px] rotate-[5deg] animate-fade-in-up delay-400 md:animate-none md:opacity-0 md:-translate-x-1/2 md:-translate-y-1/2 md:rotate-0 md:group-hover:opacity-100 md:group-hover:translate-x-[400px] md:group-hover:-translate-y-[20px] md:group-hover:rotate-[15deg] transition-all duration-700 ease-out md:delay-300 pointer-events-none">
                             <div className="w-full h-full animate-float-magical">
                                 <div className="w-full h-full bg-black/80 backdrop-blur-sm border border-wts-green/30 rounded-xl p-3 transform scale-90 shadow-2xl">
                                     <svg className="w-full h-full" viewBox="0 0 100 140">
@@ -264,7 +264,7 @@ export function Hero() {
                                 <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#888_1px,transparent_1px)] [background-size:20px_20px]" />
 
                                 {/* Logo + Title Container (Slides Up) */}
-                                <div className="relative z-10 flex flex-col items-center space-y-4 transition-all duration-500 ease-in-out group-hover:-translate-y-32">
+                                <div className="relative z-10 flex flex-col items-center space-y-4 transition-all duration-500 ease-in-out -translate-y-32 md:translate-y-0 md:group-hover:-translate-y-32">
                                     <div className="w-20 h-20 rounded-full bg-wts-green flex items-center justify-center text-black shadow-[0_0_20px_rgba(0,255,65,0.3)]">
                                         <Trophy size={40} strokeWidth={2} />
                                     </div>
@@ -274,7 +274,7 @@ export function Hero() {
                                 </div>
 
                                 {/* Features List (Reveals) */}
-                                <div className="absolute bottom-20 left-0 right-0 px-8 transition-all duration-500 ease-in-out opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 delay-100">
+                                <div className="absolute bottom-20 left-0 right-0 px-8 transition-all duration-500 ease-in-out opacity-100 translate-y-0 md:opacity-0 md:translate-y-8 md:group-hover:opacity-100 md:group-hover:translate-y-0 md:delay-100">
                                     <div className="space-y-3">
                                         {['Squad Selection', 'Team Availability', 'Matchday Line-ups', 'Results Tracking', 'Fee Collection', 'Automated Match Reminders', 'Man of the Match Voting'].map((feature, i) => (
                                             <div key={i} className="flex items-center space-x-3 text-white">
