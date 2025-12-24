@@ -40,9 +40,11 @@ export function Navbar() {
                         >
                             LOG IN
                         </Link>
-                        <Button variant="secondary" size="sm" className="skew-x-[-10deg]">
-                            <span className="skew-x-[10deg]">START CLUB</span>
-                        </Button>
+                        <Link href="/dashboard">
+                            <Button variant="secondary" size="sm" className="skew-x-[-10deg]">
+                                <span className="skew-x-[10deg]">START CLUB</span>
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Mobile Menu Toggle */}
@@ -76,13 +78,15 @@ export function Navbar() {
                     >
                         LOG IN
                     </Link>
-                    <Button
-                        size="lg"
-                        className="w-full skew-x-[-10deg] mt-4"
-                        onClick={() => setIsMenuOpen(false)}
-                    >
-                        <span className="skew-x-[10deg]">START FREE CLUB</span>
-                    </Button>
+                    <Link href="/dashboard" className="w-full">
+                        <Button
+                            size="lg"
+                            className="w-full skew-x-[-10deg] mt-4"
+                            onClick={() => setIsMenuOpen(false)}
+                        >
+                            <span className="skew-x-[10deg]">START FREE CLUB</span>
+                        </Button>
+                    </Link>
                 </nav>
             </div>
         </>

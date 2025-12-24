@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Container } from '@/components/ui/container';
 import { Check, PlayCircle, ShieldCheck, User, Trophy } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function Hero() {
     return (
@@ -127,9 +128,11 @@ export function Hero() {
 
                     {/* Buttons */}
                     <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4">
-                        <Button size="lg" className="skew-x-[-10deg] px-10">
-                            <span className="skew-x-[10deg]">CREATE TEAM</span>
-                        </Button>
+                        <Link href="/dashboard" className="contents">
+                            <Button size="lg" className="skew-x-[-10deg] px-10">
+                                <span className="skew-x-[10deg]">CREATE TEAM</span>
+                            </Button>
+                        </Link>
                         <Button variant="outline" size="lg" className="skew-x-[-10deg] px-8 group">
                             <div className="skew-x-[10deg] flex items-center space-x-2">
                                 <PlayCircle size={18} className="group-hover:text-wts-green transition-colors" />
