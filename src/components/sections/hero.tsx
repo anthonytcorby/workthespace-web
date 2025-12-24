@@ -24,7 +24,7 @@ export function Hero() {
 
             {/* Background Elements (Tactical 4-4-2 SVG) */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none select-none">
-                <svg className="w-full h-full opacity-[0.03]" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <svg className="w-full h-full opacity-[0.03]" viewBox="0 0 68 105" preserveAspectRatio="xMidYMid slice">
                     {/* Definitions for gradients/markers */}
                     <defs>
                         <marker id="arrowhead" markerWidth="4" markerHeight="4" refX="2" refY="2" orient="auto">
@@ -35,51 +35,51 @@ export function Hero() {
                     {/* Dotted Connections (Passing Lanes) */}
                     <g className="stroke-white stroke-[0.2] [stroke-dasharray:1,1]">
                         {/* GK to CBs */}
-                        <line x1="50" y1="90" x2="40" y2="75" />
-                        <line x1="50" y1="90" x2="60" y2="75" />
+                        <line x1="34" y1="95" x2="24" y2="80" />
+                        <line x1="34" y1="95" x2="44" y2="80" />
 
                         {/* Back Line */}
-                        <line x1="20" y1="70" x2="40" y2="75" />
-                        <line x1="40" y1="75" x2="60" y2="75" />
-                        <line x1="60" y1="75" x2="80" y2="70" />
+                        <line x1="10" y1="75" x2="24" y2="80" />
+                        <line x1="24" y1="80" x2="44" y2="80" />
+                        <line x1="44" y1="80" x2="58" y2="75" />
 
                         {/* Midfield Triangle */}
-                        <line x1="40" y1="50" x2="60" y2="50" />
-                        <line x1="40" y1="75" x2="40" y2="50" />
-                        <line x1="60" y1="75" x2="60" y2="50" />
+                        <line x1="24" y1="55" x2="44" y2="55" />
+                        <line x1="24" y1="80" x2="24" y2="55" />
+                        <line x1="44" y1="80" x2="44" y2="55" />
 
                         {/* Wings */}
-                        <line x1="20" y1="70" x2="20" y2="45" />
-                        <line x1="80" y1="70" x2="80" y2="45" />
+                        <line x1="10" y1="75" x2="10" y2="50" />
+                        <line x1="58" y1="75" x2="58" y2="50" />
 
                         {/* Attack */}
-                        <line x1="40" y1="50" x2="40" y2="25" />
-                        <line x1="60" y1="50" x2="60" y2="25" />
-                        <line x1="40" y1="25" x2="60" y2="25" />
-                        <line x1="20" y1="45" x2="40" y2="25" />
-                        <line x1="80" y1="45" x2="60" y2="25" />
+                        <line x1="24" y1="55" x2="24" y2="30" />
+                        <line x1="44" y1="55" x2="44" y2="30" />
+                        <line x1="24" y1="30" x2="44" y2="30" />
+                        <line x1="10" y1="50" x2="24" y2="30" />
+                        <line x1="58" y1="50" x2="44" y2="30" />
                     </g>
 
                     {/* Nodes (Players) */}
                     <g className="fill-white">
                         {/* GK */}
-                        <circle cx="50" cy="90" r="1" className="fill-wts-green" />
+                        <circle cx="34" cy="95" r="0.8" className="fill-wts-green" />
 
                         {/* Defenders */}
-                        <circle cx="20" cy="70" r="0.8" />
-                        <circle cx="40" cy="75" r="0.8" />
-                        <circle cx="60" cy="75" r="0.8" />
-                        <circle cx="80" cy="70" r="0.8" />
+                        <circle cx="10" cy="75" r="0.6" />
+                        <circle cx="24" cy="80" r="0.6" />
+                        <circle cx="44" cy="80" r="0.6" />
+                        <circle cx="58" cy="75" r="0.6" />
 
                         {/* Midfielders */}
-                        <circle cx="20" cy="45" r="0.8" />
-                        <circle cx="40" cy="50" r="0.8" />
-                        <circle cx="60" cy="50" r="0.8" />
-                        <circle cx="80" cy="45" r="0.8" />
+                        <circle cx="10" cy="50" r="0.6" />
+                        <circle cx="24" cy="55" r="0.6" />
+                        <circle cx="44" cy="55" r="0.6" />
+                        <circle cx="58" cy="50" r="0.6" />
 
                         {/* Strikers */}
-                        <circle cx="40" cy="25" r="0.8" className="fill-wts-green" />
-                        <circle cx="60" cy="25" r="0.8" className="fill-wts-green" />
+                        <circle cx="24" cy="30" r="0.6" className="fill-wts-green" />
+                        <circle cx="44" cy="30" r="0.6" className="fill-wts-green" />
                     </g>
                 </svg>
             </div>
@@ -254,7 +254,7 @@ export function Hero() {
                             </div>
                         </div>
 
-                        <div className="relative z-10 w-[240px] h-[500px] sm:w-[280px] sm:h-[600px] md:w-[320px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-[8px] border-gray-800 shadow-2xl overflow-hidden box-glow transform rotate-0 group-hover:rotate-[-2deg] lg:group-hover:rotate-[-3deg] transition-transform duration-500">
+                        <div className="relative z-10 w-[240px] h-[500px] sm:w-[280px] sm:h-[600px] md:w-[320px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-[8px] border-gray-800 shadow-2xl overflow-hidden box-glow transform rotate-0 transition-transform duration-500">
                             {/* Phone Notch/Status Bar */}
                             <div className="absolute top-0 left-0 right-0 h-8 flex justify-between px-6 items-center z-20 bg-black/50 backdrop-blur-md">
                                 <span className="text-[10px] text-white">19:30</span>
