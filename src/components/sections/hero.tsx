@@ -251,7 +251,7 @@ export function Hero() {
                             </div>
                         </div>
 
-                        <div className="relative z-10 w-[240px] h-[500px] sm:w-[280px] sm:h-[600px] md:w-[320px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-[8px] border-gray-800 shadow-2xl overflow-hidden box-glow transform rotate-[-2deg] lg:rotate-[-3deg] group-hover:rotate-0 transition-transform duration-500">
+                        <div className="relative z-10 w-[240px] h-[500px] sm:w-[280px] sm:h-[600px] md:w-[320px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-[8px] border-gray-800 shadow-2xl overflow-hidden box-glow transform rotate-0 group-hover:rotate-[-2deg] lg:group-hover:rotate-[-3deg] transition-transform duration-500">
                             {/* Phone Notch/Status Bar */}
                             <div className="absolute top-0 left-0 right-0 h-8 flex justify-between px-6 items-center z-20 bg-black/50 backdrop-blur-md">
                                 <span className="text-[10px] text-white">19:30</span>

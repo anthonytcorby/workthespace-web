@@ -1,5 +1,6 @@
 import { Container } from '@/components/ui/container';
 import { Trophy, Globe, Twitter } from 'lucide-react';
+import Link from 'next/link';
 
 export function Footer() {
     return (
@@ -14,6 +15,7 @@ export function Footer() {
 
                     {/* Links */}
                     <div className="flex items-center space-x-8 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+                        <Link href="/login" className="hover:text-white transition-colors">LOG IN</Link>
                         <a href="#" className="hover:text-white transition-colors">PRODUCT</a>
                         <a href="#" className="hover:text-white transition-colors">TERMS</a>
                         <a href="#" className="hover:text-white transition-colors">PRICING</a>
