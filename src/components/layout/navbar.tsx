@@ -60,14 +60,19 @@ export function Navbar() {
             {/* Mobile Menu Overlay */}
             <div className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-xl transition-all duration-300 md:hidden flex flex-col items-center justify-center space-y-8 ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible pointer-events-none'}`}>
                 <nav className="flex flex-col items-center space-y-6 text-center">
-                    {['Features', 'Pricing', 'About', 'Contact'].map((item) => (
+                    {[
+                        { label: 'Features', href: '/#features' },
+                        { label: 'Pricing', href: '/pricing' },
+                        { label: 'About', href: '/about' },
+                        { label: 'Contact', href: '/contact' }
+                    ].map((item) => (
                         <Link
-                            key={item}
-                            href="#"
+                            key={item.label}
+                            href={item.href}
                             className="text-3xl font-display font-bold italic text-white hover:text-wts-green transition-colors"
                             onClick={() => setIsMenuOpen(false)}
                         >
-                            {item.toUpperCase()}
+                            {item.label.toUpperCase()}
                         </Link>
                     ))}
                     <div className="w-12 h-px bg-white/10 my-4" />

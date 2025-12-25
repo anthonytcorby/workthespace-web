@@ -254,7 +254,7 @@ export function Hero() {
                             </div>
                         </div>
 
-                        <div className="relative z-10 w-[240px] h-[500px] sm:w-[280px] sm:h-[600px] md:w-[320px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-[8px] border-gray-800 shadow-2xl overflow-hidden box-glow transform rotate-0 transition-transform duration-500">
+                        <div className="relative z-10 w-[240px] h-[500px] sm:w-[280px] sm:h-[600px] md:w-[320px] bg-black rounded-[2.5rem] md:rounded-[3rem] border-[6px] md:border-[8px] border-gray-800 shadow-2xl overflow-hidden box-glow transform rotate-0 group-hover:rotate-[-2deg] lg:group-hover:rotate-[-3deg] transition-transform duration-500">
                             {/* Phone Notch/Status Bar */}
                             <div className="absolute top-0 left-0 right-0 h-8 flex justify-between px-6 items-center z-20 bg-black/50 backdrop-blur-md">
                                 <span className="text-[10px] text-white">19:30</span>
@@ -300,7 +300,7 @@ export function Hero() {
                     <p className="text-[10px] font-bold tracking-[0.2em] text-gray-500 uppercase">Available Now</p>
                     <div className="flex flex-col space-y-2">
                         {/* App Store */}
-                        <a href="#" className="flex items-center space-x-2 bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg hover:border-wts-green/50 transition-colors w-40">
+                        <Link href="/dashboard" className="flex items-center space-x-2 bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg hover:border-wts-green/50 transition-colors w-40">
                             <svg viewBox="0 0 384 512" className="w-5 h-5 fill-white">
                                 <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 21.8-88.5 21.8-11.4 0-51.1-20.8-82.3-20.2-41.2.6-78.9 23.9-100.1 60.1-43.5 74.3-11.1 184.6 30.6 244.6 20.3 29.4 45.4 62.4 77.2 61.2 31.2-1.2 43.1-20.1 80.8-20.1 37.8 0 48.7 20.1 80.8 19.5 32.7-.6 54.3-30 74.4-59.5 23.2-33.9 32.7-66.8 33-68.5-.7-.3-63.5-24.3-64.1-96.2zM281.8 102.6c15.1-18.3 25.1-43.7 22.3-69.1-22 1-48.4 14.8-64.1 33.1-14.1 16.3-26.4 42.4-23.1 67 24.3 1.9 49-11.8 64.9-31z" />
                             </svg>
@@ -308,9 +308,9 @@ export function Hero() {
                                 <span className="text-[8px] uppercase tracking-tighter text-gray-400">Download on the</span>
                                 <span className="text-sm font-bold tracking-tight">App Store</span>
                             </div>
-                        </a>
+                        </Link>
                         {/* Play Store */}
-                        <a href="#" className="flex items-center space-x-2 bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg hover:border-wts-green/50 transition-colors w-40">
+                        <Link href="/dashboard" className="flex items-center space-x-2 bg-black/40 backdrop-blur-md border border-white/10 px-4 py-2 rounded-lg hover:border-wts-green/50 transition-colors w-40">
                             <svg viewBox="0 0 512 512" className="w-5 h-5 fill-white">
                                 <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
                             </svg>
@@ -318,7 +318,7 @@ export function Hero() {
                                 <span className="text-[8px] uppercase tracking-tighter text-gray-400">Get it on</span>
                                 <span className="text-sm font-bold tracking-tight">Google Play</span>
                             </div>
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </Container>

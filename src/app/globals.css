@@ -152,13 +152,13 @@ body {
 
 .animate-stadium-glow {
   color: white;
-  animation: stadium-glow 4s ease-in-out infinite;
+  animation: stadium-glow 2.5s ease-in-out infinite;
   will-change: text-shadow, opacity;
 }
 
 .animate-stadium-glow-green {
   color: #00ff41;
-  animation: stadium-glow-green 4s ease-in-out infinite;
+  animation: stadium-glow-green 2.5s ease-in-out infinite;
   will-change: text-shadow, opacity;
 }
 
@@ -175,7 +175,7 @@ body {
 }
 
 .animate-fade-in-up {
-  animation: fade-in-up 0.8s ease-out forwards;
+  animation: fade-in-up 0.4s ease-out forwards;
   will-change: transform, opacity;
 }
 

@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { MousePointer2, Settings2, RotateCcw } from 'lucide-react';
+import { getPlayerDisplayNames } from '@/lib/utils';
+import { setDragGhost } from '@/lib/drag-utils';
 
-interface Player {
+export interface Player {
     id: number;
     x: number;
     y: number;
@@ -12,51 +14,31 @@ interface Player {
     role: string;
 }
 
-const INITIAL_442: Player[] = [
-    { id: 1, x: 50, y: 90, name: 'G. Keeper', number: 1, role: 'GK' },
-    { id: 2, x: 15, y: 70, name: 'L. Back', number: 3, role: 'LB' },
-    { id: 3, x: 38, y: 75, name: 'C. Back', number: 4, role: 'CB' },
-    { id: 4, x: 62, y: 75, name: 'C. Back', number: 5, role: 'CB' },
-    { id: 5, x: 85, y: 70, name: 'R. Back', number: 2, role: 'RB' },
-    { id: 6, x: 15, y: 45, name: 'L. Mid', number: 11, role: 'LM' },
-    { id: 7, x: 38, y: 50, name: 'C. Mid', number: 8, role: 'CM' },
-    { id: 8, x: 62, y: 50, name: 'C. Mid', number: 6, role: 'CM' },
-    { id: 9, x: 85, y: 45, name: 'R. Mid', number: 7, role: 'RM' },
-    { id: 10, x: 40, y: 20, name: 'Forward', number: 9, role: 'ST' },
-    { id: 11, x: 60, y: 20, name: 'Forward', number: 10, role: 'ST' },
-];
+interface TacticsBoardProps {
+    formation: { x: number; y: number; role: string }[];
+    lineup: Record<number, number>;
+    squad: Array<{ id: number; name: string; number: number; position: string }>;
+    onDrop: (playerId: number, index: number) => void;
+    onNodeClick: (playerId: number, currentRole: string) => void;
+    onReset?: () => void;
+}
 
-export function TacticsBoard() {
-    const [players, setPlayers] = useState<Player[]>(INITIAL_442);
-    const [draggingId, setDraggingId] = useState<number | null>(null);
+export function TacticsBoard({ formation, lineup, squad, onDrop, onNodeClick, onReset }: TacticsBoardProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const handlePointerDown = (id: number) => {
-        setDraggingId(id);
+    const displayNames = React.useMemo(() => getPlayerDisplayNames(squad), [squad]);
+
+    const handleDragOver = (e: React.DragEvent) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
     };
 
-    const handlePointerMove = (e: React.PointerEvent) => {
-        if (draggingId === null || !containerRef.current) return;
-
-        const rect = containerRef.current.getBoundingClientRect();
-        const x = ((e.clientX - rect.left) / rect.width) * 100;
-        const y = ((e.clientY - rect.top) / rect.height) * 100;
-
-        // Clamp values between 0 and 100
-        const clampedX = Math.max(2, Math.min(98, x));
-        const clampedY = Math.max(2, Math.min(98, y));
-
-        setPlayers(prev => prev.map(p =>
-            p.id === draggingId ? { ...p, x: clampedX, y: clampedY } : p
-        ));
-    };
-
-    const handlePointerUp = () => {
-        setDraggingId(null);
-    };
-
-    const resetFormation = () => {
-        setPlayers(INITIAL_442);
+    const handleDrop = (e: React.DragEvent, index: number) => {
+        e.preventDefault();
+        const playerId = e.dataTransfer.getData('playerId');
+        if (playerId) {
+            onDrop(parseInt(playerId), index);
+        }
     };
 
     return (
@@ -64,24 +46,24 @@ export function TacticsBoard() {
             {/* Header / Controls */}
             <div className="flex items-center justify-between px-2">
                 <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-wts-green/10 rounded-lg">
-                        <MousePointer2 size={18} className="text-wts-green" />
+                    <div className="p-2.5 bg-wts-green/10 rounded-lg">
+                        <MousePointer2 size={20} className="text-wts-green" />
                     </div>
                     <div>
-                        <h3 className="text-sm font-bold text-white uppercase tracking-widest">Tactical Arena</h3>
-                        <p className="text-[10px] text-gray-500 uppercase font-mono">11 v 11 · Interactive Board</p>
+                        <h3 className="text-lg font-bold text-white uppercase tracking-widest">Tactics</h3>
+                        <p className="text-sm text-gray-500 uppercase font-mono">11 v 11 · Drag & Drop</p>
                     </div>
                 </div>
                 <div className="flex items-center space-x-2">
                     <button
-                        onClick={resetFormation}
-                        className="p-2 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-all flex items-center space-x-2"
+                        onClick={onReset}
+                        className="p-2.5 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-all flex items-center space-x-2"
                     >
-                        <RotateCcw size={16} />
-                        <span className="text-[10px] font-bold uppercase tracking-widest">Reset</span>
+                        <RotateCcw size={18} />
+                        <span className="text-xs font-bold uppercase tracking-widest">Reset</span>
                     </button>
-                    <button className="p-2 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-all">
-                        <Settings2 size={16} />
+                    <button className="p-2.5 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-all">
+                        <Settings2 size={18} />
                     </button>
                 </div>
             </div>
@@ -91,9 +73,6 @@ export function TacticsBoard() {
                 <div
                     ref={containerRef}
                     className="relative h-full aspect-[68/105] bg-[#0A120A] rounded-2xl border border-white/5 overflow-hidden shadow-2xl touch-none select-none group/pitch"
-                    onPointerMove={handlePointerMove}
-                    onPointerUp={handlePointerUp}
-                    onPointerLeave={handlePointerUp}
                 >
                     {/* Global Pitch Texture */}
                     <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff10_1px,transparent_1px)] [background-size:32px_32px]" />
@@ -127,45 +106,59 @@ export function TacticsBoard() {
                         <path d="M66,102 Q65,102 65,103" strokeWidth="0.5" />
                     </svg>
 
-                    {/* Player Nodes */}
-                    {players.map((player) => (
-                        <div
-                            key={player.id}
-                            className={`absolute w-10 h-10 -ml-5 -mt-5 flex items-center justify-center cursor-grab active:cursor-grabbing transition-transform duration-75 ${draggingId === player.id ? 'z-50 scale-125' : 'z-20'}`}
-                            style={{
-                                left: `${player.x}%`,
-                                top: `${player.y}%`,
-                                touchAction: 'none'
-                            }}
-                            onPointerDown={() => handlePointerDown(player.id)}
-                        >
-                            {/* Player Glow */}
-                            <div className={`absolute inset-0 rounded-full blur-[8px] opacity-40 ${player.role === 'GK' ? 'bg-yellow-400' : 'bg-wts-green'}`} />
+                    {/* Formation Nodes */}
+                    {formation && formation.map((pos, index) => {
+                        const playerId = lineup[index];
+                        const player = playerId ? squad.find(p => p.id === playerId) : null;
 
-                            {/* Player Number Circle */}
-                            <div className={`relative w-9 h-9 rounded-full border-2 border-black flex items-center justify-center shadow-lg transition-transform ${player.role === 'GK' ? 'bg-yellow-400 text-black' : 'bg-wts-green text-black'} ${draggingId === player.id ? 'ring-2 ring-white border-none' : ''}`}>
-                                <span className="text-xs font-black">{player.number}</span>
+                        return (
+                            <div
+                                key={index}
+                                className={`absolute w-10 h-10 -ml-5 -mt-5 flex items-center justify-center transition-all duration-300 z-20 group/node ${player ? 'cursor-grab active:cursor-grabbing' : ''}`}
+                                style={{
+                                    left: `${pos.x}%`,
+                                    top: `${pos.y}%`,
+                                }}
+                                draggable={!!player}
+                                onDragStart={(e) => {
+                                    if (player) {
+                                        e.dataTransfer.setData('playerId', player.id.toString());
+                                        setDragGhost(e, player.number, player.position);
+                                        e.stopPropagation();
+                                    }
+                                }}
+                                onDragOver={handleDragOver}
+                                onDrop={(e) => handleDrop(e, index)}
+                            >
+                                {player ? (
+                                    <>
+                                        {/* Player Glow */}
+                                        <div className={`absolute inset-0 rounded-full blur-[8px] opacity-40 ${player.position === 'GK' ? 'bg-yellow-400' : 'bg-wts-green'}`} />
+
+                                        {/* Player Number Circle */}
+                                        <div className={`relative w-9 h-9 rounded-full border-2 border-black flex items-center justify-center shadow-lg transition-transform ${player.position === 'GK' ? 'bg-yellow-400 text-black' : 'bg-wts-green text-black'}`}>
+                                            <span className="text-sm font-black">{player.number}</span>
+                                        </div>
+
+                                        {/* Player Name Tag */}
+                                        <div className="absolute -bottom-10 whitespace-nowrap px-3 py-1.5 bg-black/90 backdrop-blur-xl rounded-md border border-white/10 shadow-2xl pointer-events-none flex flex-col items-center z-[100] scale-90 transition-transform origin-top">
+                                            <span className="text-xs font-black text-white uppercase tracking-[0.1em] leading-none mb-0.5">
+                                                {displayNames[player.id]}
+                                            </span>
+                                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">{pos.role}</span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    /* Empty Slot Placeholder */
+                                    <div className="relative w-8 h-8 rounded-full border-2 border-dashed border-white/20 flex items-center justify-center bg-black/40 hover:border-wts-green/50 hover:bg-wts-green/10 transition-colors">
+                                        <span className="text-[8px] font-bold text-gray-500 uppercase">{pos.role}</span>
+                                    </div>
+                                )}
                             </div>
+                        );
+                    })}
 
-                            {/* Player Name Tag */}
-                            <div className="absolute -bottom-8 whitespace-nowrap px-3 py-1 bg-black/90 backdrop-blur-xl rounded-md border border-white/10 shadow-2xl pointer-events-none transition-opacity opacity-0 group-hover/pitch:opacity-100 flex flex-col items-center">
-                                <span className="text-[10px] font-black text-white uppercase tracking-[0.15em]">{player.name}</span>
-                                <span className="text-[7px] font-bold text-gray-400 uppercase tracking-widest">{player.role}</span>
-                            </div>
-                        </div>
-                    ))}
 
-                    {/* Tactics Ticker / Info Overlay */}
-                    <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between pointer-events-none">
-                        <div className="bg-black/80 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-full shadow-2xl">
-                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Formation: </span>
-                            <span className="text-[10px] font-black text-wts-green uppercase tracking-[0.2em]">Custom 4-4-2</span>
-                        </div>
-                        <div className="bg-black/80 backdrop-blur-xl border border-white/10 px-6 py-2.5 rounded-full shadow-2xl">
-                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.2em]">Active Players: </span>
-                            <span className="text-[10px] font-black text-white uppercase tracking-[0.2em]">11 / 11</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
