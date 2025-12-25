@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { MousePointer2, Settings2, RotateCcw } from 'lucide-react';
+import { MousePointer2, Settings2, RotateCcw, Trash2 } from 'lucide-react';
 import { getPlayerDisplayNames } from '@/lib/utils';
 import { setDragGhost } from '@/lib/drag-utils';
+import Image from 'next/image';
 
 export interface Player {
     id: number;
@@ -12,18 +13,20 @@ export interface Player {
     name: string;
     number: number;
     role: string;
+    nationality?: string;
 }
 
 interface TacticsBoardProps {
     formation: { x: number; y: number; role: string }[];
     lineup: Record<number, number>;
-    squad: Array<{ id: number; name: string; number: number; position: string }>;
+    squad: Array<{ id: number; name: string; number: number; position: string; nationality?: string }>;
     onDrop: (playerId: number, index: number) => void;
     onNodeClick: (playerId: number, currentRole: string) => void;
     onReset?: () => void;
+    onClear?: () => void;
 }
 
-export function TacticsBoard({ formation, lineup, squad, onDrop, onNodeClick, onReset }: TacticsBoardProps) {
+export function TacticsBoard({ formation, lineup, squad, onDrop, onNodeClick, onReset, onClear }: TacticsBoardProps) {
     const containerRef = useRef<HTMLDivElement>(null);
 
     const displayNames = React.useMemo(() => getPlayerDisplayNames(squad), [squad]);
@@ -51,10 +54,17 @@ export function TacticsBoard({ formation, lineup, squad, onDrop, onNodeClick, on
                     </div>
                     <div>
                         <h3 className="text-lg font-bold text-white uppercase tracking-widest">Tactics</h3>
-                        <p className="text-sm text-gray-500 uppercase font-mono">11 v 11 · Drag & Drop</p>
+                        <p className="text-sm text-gray-500 uppercase font-mono">11 v 11</p>
                     </div>
                 </div>
                 <div className="flex items-center space-x-2">
+                    <button
+                        onClick={onClear}
+                        className="p-2.5 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-all flex items-center space-x-2"
+                    >
+                        <Trash2 size={18} />
+                        <span className="text-xs font-bold uppercase tracking-widest">Clear Team</span>
+                    </button>
                     <button
                         onClick={onReset}
                         className="p-2.5 hover:bg-white/5 rounded-lg text-gray-500 hover:text-white transition-all flex items-center space-x-2"
@@ -142,9 +152,22 @@ export function TacticsBoard({ formation, lineup, squad, onDrop, onNodeClick, on
 
                                         {/* Player Name Tag */}
                                         <div className="absolute -bottom-10 whitespace-nowrap px-3 py-1.5 bg-black/90 backdrop-blur-xl rounded-md border border-white/10 shadow-2xl pointer-events-none flex flex-col items-center z-[100] scale-90 transition-transform origin-top">
-                                            <span className="text-xs font-black text-white uppercase tracking-[0.1em] leading-none mb-0.5">
-                                                {displayNames[player.id]}
-                                            </span>
+                                            <div className="flex items-center space-x-1.5 mb-0.5">
+                                                {player.nationality && (
+                                                    <div className="relative w-3.5 h-2.5 rounded-[1px] overflow-hidden opacity-80">
+                                                        <Image
+                                                            src={`https://flagcdn.com/w20/${player.nationality}.png`}
+                                                            alt={player.nationality}
+                                                            fill
+                                                            className="object-cover"
+                                                            unoptimized
+                                                        />
+                                                    </div>
+                                                )}
+                                                <span className="text-xs font-black text-white uppercase tracking-[0.1em] leading-none">
+                                                    {displayNames[player.id]}
+                                                </span>
+                                            </div>
                                             <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest leading-none">{pos.role}</span>
                                         </div>
                                     </>

@@ -195,6 +195,14 @@ export default function TacticsPage() {
         setTimeout(() => setIsSaved(false), 3000);
     };
 
+    const handleClearTeam = () => {
+        setLineup({});
+        setSubs({});
+        setSetPieces({});
+        setPenalties({});
+        setIsSaved(false);
+    };
+
     const handleDragOver = (e: React.DragEvent) => {
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
@@ -307,6 +315,7 @@ export default function TacticsPage() {
                                 squad={squad}
                                 onDrop={(playerId, index) => handleDrop(playerId, 'pitch', index)}
                                 onNodeClick={handleNodeClick}
+                                onClear={handleClearTeam}
                             />
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Tv, Calendar, MapPin, Clock, Shield, Shirt, Wind, CloudRain, ChevronRight } from 'lucide-react';
+import { Tv, Calendar, MapPin, ChevronRight, Share2, Info } from 'lucide-react';
 import Image from 'next/image';
 
 // Mock Data for Matchday
@@ -28,6 +28,21 @@ const STARTING_XI = [
     { number: 7, name: 'C. Ronaldo', position: 'RW' },
     { number: 11, name: 'N. Neymar', position: 'LW' },
     { number: 9, name: 'E. Haaland', position: 'ST' },
+];
+
+// Static coordinates for 4-2-3-1 / 4-3-3 hybrid
+const FORMATION_COORDS = [
+    { x: 50, y: 88 }, // GK
+    { x: 85, y: 70 }, // RB
+    { x: 62, y: 75 }, // RCB
+    { x: 38, y: 75 }, // LCB
+    { x: 15, y: 70 }, // LB
+    { x: 50, y: 60 }, // CDM
+    { x: 65, y: 45 }, // RCM
+    { x: 35, y: 45 }, // LCM
+    { x: 85, y: 25 }, // RW
+    { x: 15, y: 25 }, // LW
+    { x: 50, y: 15 }, // ST
 ];
 
 const SUBS = [
@@ -80,123 +95,122 @@ export default function MatchdayPage() {
                 <div className="space-y-6 animate-in slide-in-from-bottom-4 duration-500">
 
                     {/* Header / Hero */}
-                    <div className="relative bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 overflow-hidden">
-                        {/* Background Gradient */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-wts-green/5 to-transparent pointer-events-none" />
-
-                        <div className="flex flex-col md:flex-row justify-between items-center gap-8 relative z-10">
-                            {/* Home Team */}
-                            <div className="text-center md:text-left">
-                                <span className="text-wts-green text-xs font-bold tracking-[0.2em] uppercase block mb-1">Home</span>
-                                <h1 className="text-4xl md:text-6xl font-display font-bold italic text-white tracking-tighter">
-                                    WTS
+                    <div className="p-6 bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl flex flex-col md:flex-row items-center justify-between">
+                        <div className="flex items-center space-x-4 mb-4 md:mb-0">
+                            <div className="w-12 h-12 bg-wts-green flex items-center justify-center rounded-xl text-black font-bold">
+                                VS
+                            </div>
+                            <div>
+                                <h1 className="text-2xl font-display font-bold italic text-white uppercase tracking-tighter">
+                                    Match Day Live
                                 </h1>
-                            </div>
-
-                            {/* VS / Info */}
-                            <div className="flex flex-col items-center text-center space-y-2">
-                                <div className="px-4 py-1.5 bg-wts-green text-black font-bold text-xs uppercase tracking-widest rounded-full">
-                                    {MATCH_DATA.time} KO
-                                </div>
-                                <div className="text-xl font-display font-bold italic text-gray-500">VS</div>
-                                <div className="flex items-center space-x-2 text-gray-400">
-                                    <Calendar size={14} />
-                                    <span className="text-xs font-bold uppercase tracking-wide">{MATCH_DATA.date}</span>
-                                </div>
-                                <div className="flex items-center space-x-2 text-gray-400">
-                                    <MapPin size={14} />
-                                    <span className="text-xs font-bold uppercase tracking-wide">{MATCH_DATA.venue}</span>
+                                <div className="flex items-center space-x-3 text-xs font-bold text-gray-400 uppercase tracking-widest">
+                                    <span className="flex items-center space-x-1"><Calendar size={12} /><span>{MATCH_DATA.date}</span></span>
+                                    <span className="flex items-center space-x-1"><MapPin size={12} /><span>{MATCH_DATA.venue}</span></span>
                                 </div>
                             </div>
-
-                            {/* Away Team */}
-                            <div className="text-center md:text-right">
-                                <span className="text-gray-500 text-xs font-bold tracking-[0.2em] uppercase block mb-1">Away</span>
-                                <h1 className="text-4xl md:text-6xl font-display font-bold italic text-white tracking-tighter">
-                                    TECH UTD
-                                </h1>
-                            </div>
+                        </div>
+                        <div className="flex items-center space-x-3">
+                            <button className="px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-xs font-bold text-white uppercase tracking-widest flex items-center space-x-2 transition-all">
+                                <Share2 size={14} />
+                                <span>Share Lineup</span>
+                            </button>
+                            <button className="px-4 py-2 bg-wts-green text-black rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-wts-green/90 transition-all">
+                                Match Centre
+                            </button>
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        {/* Left: Squad List */}
-                        <div className="lg:col-span-2 space-y-6">
-                            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-6">
-                                <div className="flex items-center justify-between mb-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        {/* Left: Squad List (4 cols) */}
+                        <div className="lg:col-span-4 space-y-8">
+                            {/* Starting XI List */}
+                            <div>
+                                <div className="flex items-center justify-between mb-4 px-2">
                                     <h3 className="text-xl font-display font-bold italic text-white uppercase tracking-tighter">Starting XI</h3>
-                                    <div className="px-3 py-1 bg-white/5 rounded text-[10px] font-bold text-wts-green uppercase tracking-widest border border-white/10">
-                                        Confirmed
-                                    </div>
+                                    <span className="text-xs font-bold text-wts-green uppercase tracking-widest">4-3-3 Attacking</span>
                                 </div>
-
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                                    {STARTING_XI.map((player) => (
-                                        <div key={player.number} className="flex items-center space-x-4 p-3 bg-white/5 border border-white/5 rounded-xl hover:bg-white/10 transition-colors group">
-                                            <div className="w-8 h-8 flex items-center justify-center bg-black/50 rounded-lg text-white font-display font-bold italic text-lg border border-white/10 group-hover:border-wts-green/50 transition-colors">
-                                                {player.number}
-                                            </div>
+                                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
+                                    {STARTING_XI.map((player, i) => (
+                                        <div key={player.number} className="flex items-center p-3 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors group">
+                                            <div className="w-8 font-mono text-sm text-gray-500 font-bold group-hover:text-wts-green transition-colors">{player.number}</div>
                                             <div className="flex-1">
-                                                <p className="text-sm font-bold text-white group-hover:text-wts-green transition-colors">{player.name}</p>
-                                                <p className="text-[10px] text-gray-500 uppercase tracking-widest">{player.position}</p>
+                                                <span className="text-sm font-bold text-white uppercase tracking-wide">{player.name}</span>
                                             </div>
+                                            <div className="text-[10px] font-bold text-gray-600 uppercase tracking-widest group-hover:text-gray-400">{player.position}</div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* Subs */}
-                            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-6">
-                                <h3 className="text-xl font-display font-bold italic text-white uppercase tracking-tighter mb-4">Substitutes</h3>
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-                                    {SUBS.map((player) => (
-                                        <div key={player.number} className="flex items-center space-x-3 p-3 bg-white/5 border border-white/5 rounded-xl opacity-60 hover:opacity-100 transition-opacity">
-                                            <span className="text-xs font-mono text-gray-400">{player.number}</span>
-                                            <span className="text-xs font-bold text-white">{player.name}</span>
+                            {/* Subs List */}
+                            <div>
+                                <h3 className="text-xl font-display font-bold italic text-white uppercase tracking-tighter mb-4 px-2">Substitutes</h3>
+                                <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden">
+                                    {SUBS.map((player, i) => (
+                                        <div key={player.number} className="flex items-center p-3 border-b border-white/5 last:border-0 hover:bg-white/5 transition-colors opacity-70 hover:opacity-100">
+                                            <div className="w-8 font-mono text-xs text-gray-500 font-bold">{player.number}</div>
+                                            <div className="flex-1">
+                                                <span className="text-xs font-bold text-white uppercase tracking-wide">{player.name}</span>
+                                            </div>
+                                            <div className="text-[9px] font-bold text-gray-600 uppercase tracking-widest">{player.position}</div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
 
-                        {/* Right: Match Info */}
-                        <div className="space-y-6">
-                            {/* Conditions Card */}
-                            <div className="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-6 space-y-4">
-                                <h3 className="text-lg font-display font-bold italic text-white uppercase tracking-tighter mb-2">Conditions</h3>
+                        {/* Right: Pitch Visual (8 cols) */}
+                        <div className="lg:col-span-8 flex flex-col">
+                            <div className="flex-1 bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-6 relative overflow-hidden flex items-center justify-center min-h-[600px]">
+                                {/* Pitch Texture */}
+                                <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff15_1px,transparent_1px)] [background-size:24px_24px]" />
 
-                                <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
-                                    <div className="flex items-center space-x-3">
-                                        <CloudRain size={18} className="text-blue-400" />
-                                        <span className="text-xs font-bold text-gray-300 uppercase tracking-wide">Weather</span>
-                                    </div>
-                                    <span className="text-xs font-bold text-white">{MATCH_DATA.weather}</span>
+                                {/* PITCH SVG */}
+                                <div className="relative w-full max-w-[500px] aspect-[68/105]">
+                                    <svg className="absolute inset-0 w-full h-full pointer-events-none stroke-white/20 fill-none" viewBox="0 0 68 105" preserveAspectRatio="none">
+                                        {/* Pitch Boundary */}
+                                        <rect x="0.5" y="0.5" width="67" height="104" rx="2" strokeWidth="0.5" />
+                                        {/* Halfway */}
+                                        <line x1="0.5" y1="52.5" x2="67.5" y2="52.5" strokeWidth="0.5" />
+                                        <circle cx="34" cy="52.5" r="9.15" strokeWidth="0.5" />
+                                        <circle cx="34" cy="52.5" r="0.5" fill="currentColor" />
+                                        {/* Top Box */}
+                                        <rect x="13.8" y="0.5" width="40.4" height="16.5" strokeWidth="0.5" />
+                                        <rect x="24.8" y="0.5" width="18.4" height="5.5" strokeWidth="0.5" />
+                                        <path d="M27.5,17 Q34,23 40.5,17" strokeWidth="0.5" />
+                                        {/* Bottom Box */}
+                                        <rect x="13.8" y="87.5" width="40.4" height="16.5" strokeWidth="0.5" />
+                                        <rect x="24.8" y="98.5" width="18.4" height="5.5" strokeWidth="0.5" />
+                                        <path d="M27.5,87.5 Q34,81.5 40.5,87.5" strokeWidth="0.5" />
+                                    </svg>
+
+                                    {/* PLayers */}
+                                    {STARTING_XI.map((player, index) => {
+                                        const coords = FORMATION_COORDS[index] || { x: 50, y: 50 };
+                                        return (
+                                            <div
+                                                key={player.number}
+                                                className="absolute w-12 h-12 -ml-6 -mt-6 flex flex-col items-center justify-center z-10"
+                                                style={{ left: `${coords.x}%`, top: `${coords.y}%` }}
+                                            >
+                                                {/* Node */}
+                                                <div className={`w-10 h-10 rounded-full border-2 border-black shadow-lg flex items-center justify-center ${player.position === 'GK' ? 'bg-yellow-400 text-black' : 'bg-wts-green text-black'}`}>
+                                                    <span className="font-display font-bold text-sm tracking-tight">{player.number}</span>
+                                                </div>
+                                                {/* Name Tag */}
+                                                <div className="absolute -bottom-6 whitespace-nowrap px-2 py-0.5 bg-black/80 rounded border border-white/10 backdrop-blur-sm">
+                                                    <span className="text-[10px] font-bold text-white uppercase tracking-widest block leading-none">{player.name.split(' ').pop()}</span>
+                                                </div>
+                                            </div>
+                                        )
+                                    })}
                                 </div>
 
-                                <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
-                                    <div className="flex items-center space-x-3">
-                                        <Shirt size={18} className="text-wts-green" />
-                                        <span className="text-xs font-bold text-gray-300 uppercase tracking-wide">Kit</span>
-                                    </div>
-                                    <span className="text-xs font-bold text-white">{MATCH_DATA.kit}</span>
+                                {/* Team Logo Overlay in Center */}
+                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-5">
+                                    <div className="w-64 h-64 border-[20px] border-white rounded-full" />
                                 </div>
-
-                                <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl border border-white/5">
-                                    <div className="flex items-center space-x-3">
-                                        <Shield size={18} className="text-yellow-500" />
-                                        <span className="text-xs font-bold text-gray-300 uppercase tracking-wide">Referee</span>
-                                    </div>
-                                    <span className="text-xs font-bold text-white">{MATCH_DATA.referee}</span>
-                                </div>
-                            </div>
-
-                            {/* Actions */}
-                            <div className="bg-wts-green p-6 rounded-3xl text-center space-y-4">
-                                <h3 className="text-2xl font-display font-bold italic text-black uppercase tracking-tighter">Ready?</h3>
-                                <p className="text-black/70 text-xs font-bold uppercase tracking-widest">Confirm your attendance</p>
-                                <button className="w-full py-4 bg-black text-white rounded-xl font-bold uppercase tracking-widest hover:bg-black/80 transition-colors shadow-xl">
-                                    Check In Now
-                                </button>
                             </div>
                         </div>
                     </div>

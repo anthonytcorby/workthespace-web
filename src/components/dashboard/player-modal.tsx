@@ -1,18 +1,6 @@
 import { useState, useEffect } from 'react';
 import { X, Shield, Trash2, Save } from 'lucide-react';
-
-interface Player {
-    id: number;
-    name: string;
-    role: string;
-    number: number;
-    captain: boolean;
-    attendance: number;
-    reliability: number;
-    preferred: boolean;
-    preferredFoot?: 'Left' | 'Right' | 'Both';
-    username?: string;
-}
+import { Player } from '@/lib/mock-data';
 
 interface PlayerModalProps {
     isOpen: boolean;

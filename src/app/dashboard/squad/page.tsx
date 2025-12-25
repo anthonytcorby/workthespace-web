@@ -3,24 +3,14 @@
 import { useState } from 'react';
 import { Users, Star, Clock, Shield, ArrowUpDown, ArrowUp, ArrowDown, X, Plus } from 'lucide-react';
 import { PlayerModal } from '@/components/dashboard/player-modal';
+import Image from 'next/image';
 
-import { TEAMSHEET } from '@/lib/mock-data';
+import { TEAMSHEET, Player } from '@/lib/mock-data';
 
-type SortKey = 'number' | 'name' | 'role' | 'attendance' | 'reliability';
+type SortKey = 'number' | 'name' | 'nationality' | 'role' | 'attendance' | 'reliability' | 'preferredFoot' | 'captain';
 type SortDirection = 'asc' | 'desc';
 
-interface Player {
-    id: number;
-    name: string;
-    role: string;
-    number: number;
-    captain: boolean;
-    attendance: number;
-    reliability: number;
-    preferred: boolean;
-    preferredFoot?: 'Left' | 'Right' | 'Both';
-    username?: string;
-}
+
 
 export default function SquadPage() {
     const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: SortDirection }>({
@@ -29,46 +19,51 @@ export default function SquadPage() {
     });
 
     const [players, setPlayers] = useState<Player[]>(TEAMSHEET);
-
-    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [editingPlayer, setEditingPlayer] = useState<Player | null>(null);
-
-    // New Player Form State
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [newPlayerName, setNewPlayerName] = useState('');
     const [newPlayerNumber, setNewPlayerNumber] = useState('');
     const [newPlayerRole, setNewPlayerRole] = useState('CM');
 
+    const handleUpdatePlayer = (updatedPlayer: Player) => {
+        setPlayers(players.map(p => p.id === updatedPlayer.id ? updatedPlayer : p));
+        setEditingPlayer(null);
+    };
+
+    const handleReleasePlayer = (playerId: number) => {
+        setPlayers(players.filter(p => p.id !== playerId));
+        setEditingPlayer(null);
+    };
+
     const handleAddPlayer = (e: React.FormEvent) => {
         e.preventDefault();
         const newPlayer: Player = {
-            id: players.length + 1,
-            name: newPlayerName || 'New Player',
-            number: parseInt(newPlayerNumber) || 99,
+            id: Math.max(...players.map(p => p.id)) + 1,
+            name: newPlayerName,
+            number: parseInt(newPlayerNumber) || 0,
             role: newPlayerRole,
+            position: newPlayerRole,
             captain: false,
-            attendance: 100,
-            reliability: 100,
+            attendance: 0,
+            reliability: 50,
             preferred: false,
-            preferredFoot: 'Right',
-            username: '@newplayer'
+            nationality: 'gb-eng',
+            preferredFoot: 'Right'
         };
         setPlayers([...players, newPlayer]);
         setIsAddModalOpen(false);
         setNewPlayerName('');
         setNewPlayerNumber('');
-    };
-
-    const handleUpdatePlayer = (updatedPlayer: Player) => {
-        setPlayers(players.map(p => p.id === updatedPlayer.id ? updatedPlayer : p));
-    };
-
-    const handleReleasePlayer = (id: number) => {
-        setPlayers(players.filter(p => p.id !== id));
+        setNewPlayerRole('CM');
     };
 
     const sortedPlayers = [...players].sort((a, b) => {
         const aValue = a[sortConfig.key];
         const bValue = b[sortConfig.key];
+
+        if (aValue === undefined && bValue === undefined) return 0;
+        if (aValue === undefined) return 1;
+        if (bValue === undefined) return -1;
 
         if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
         if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
@@ -175,42 +170,41 @@ export default function SquadPage() {
                     <span>Add Player</span>
                 </button>
             </div>
-
-            {/* Squad List */}
             <div className="bg-black/40 border border-white/5 rounded-xl overflow-hidden">
                 {/* Table Header */}
                 <div className="grid grid-cols-12 gap-4 p-4 border-b border-white/5 bg-white/5">
-                    <button
-                        onClick={() => handleSort('number')}
-                        className="col-span-1 flex items-center space-x-1 group"
-                    >
+                    <button onClick={() => handleSort('number')} className="col-span-1 flex items-center space-x-1 group text-left">
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">#</span>
                         <SortIcon column="number" />
                     </button>
-                    <button
-                        onClick={() => handleSort('name')}
-                        className="col-span-3 flex items-center space-x-1 group"
-                    >
+                    <button onClick={() => handleSort('nationality')} className="col-span-1 flex items-center space-x-1 group text-left">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Nat</span>
+                        <SortIcon column="nationality" />
+                    </button>
+                    <button onClick={() => handleSort('name')} className="col-span-3 flex items-center space-x-1 group text-left">
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Player</span>
                         <SortIcon column="name" />
                     </button>
-                    <button
-                        onClick={() => handleSort('role')}
-                        className="col-span-1 flex items-center space-x-1 group"
-                    >
+                    <button onClick={() => handleSort('role')} className="col-span-1 flex items-center space-x-1 group text-left">
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Role</span>
                         <SortIcon column="role" />
                     </button>
-                    <div className="col-span-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Pref. Foot</div>
-                    <div className="col-span-2 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Attendance</div>
-                    <button
-                        onClick={() => handleSort('reliability')}
-                        className="col-span-2 flex items-center space-x-1 group"
-                    >
+                    <button onClick={() => handleSort('preferredFoot')} className="col-span-1 flex items-center space-x-1 group text-left">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Foot</span>
+                        <SortIcon column="preferredFoot" />
+                    </button>
+                    <button onClick={() => handleSort('attendance')} className="col-span-2 flex items-center space-x-1 group text-left">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Attendance</span>
+                        <SortIcon column="attendance" />
+                    </button>
+                    <button onClick={() => handleSort('reliability')} className="col-span-2 flex items-center space-x-1 group text-left">
                         <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Reliability</span>
                         <SortIcon column="reliability" />
                     </button>
-                    <div className="col-span-1 text-[10px] font-bold text-gray-600 uppercase tracking-widest">Status</div>
+                    <button onClick={() => handleSort('captain')} className="col-span-1 flex items-center space-x-1 group text-left">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest group-hover:text-white transition-colors">Status</span>
+                        <SortIcon column="captain" />
+                    </button>
                 </div>
 
                 {/* Player Rows */}
@@ -224,10 +218,23 @@ export default function SquadPage() {
                             <div className="col-span-1 flex items-center">
                                 <span className="text-sm font-bold text-white font-mono group-hover:text-wts-green transition-colors">{player.number}</span>
                             </div>
+                            <div className="col-span-1 flex items-center">
+                                {player.nationality && (
+                                    <div className="relative w-6 h-4 rounded-sm overflow-hidden shadow-sm opacity-80 group-hover:opacity-100 transition-opacity">
+                                        <Image
+                                            src={`https://flagcdn.com/w40/${player.nationality}.png`}
+                                            alt={player.nationality}
+                                            fill
+                                            className="object-cover"
+                                            unoptimized
+                                        />
+                                    </div>
+                                )}
+                            </div>
                             <div className="col-span-3 flex items-center space-x-2">
-                                <span className="text-sm font-bold text-white">{player.name}</span>
+                                <span className="text-sm font-bold text-white truncate">{player.name}</span>
                                 {player.captain && (
-                                    <Shield size={12} className="text-wts-green" />
+                                    <Shield size={12} className="text-wts-green flex-shrink-0" />
                                 )}
                             </div>
                             <div className="col-span-1 flex items-center">
@@ -235,21 +242,20 @@ export default function SquadPage() {
                                     {player.role}
                                 </span>
                             </div>
-                            <div className="col-span-2 flex items-center">
+                            <div className="col-span-1 flex items-center">
                                 <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">
-                                    {player.preferredFoot || '-'}
+                                    {player.preferredFoot === 'Right' ? 'R' : player.preferredFoot === 'Left' ? 'L' : 'B'}
                                 </span>
                             </div>
                             <div className="col-span-2 flex items-center">
-                                <div className="flex items-center space-x-2">
-                                    <div className="flex-1 bg-white/5 rounded-full h-1.5 w-16">
+                                <div className="flex items-center space-x-2 w-full">
+                                    <div className="flex-1 bg-white/5 rounded-full h-1.5 min-w-[3rem]">
                                         <div
-                                            className={`h-full rounded-full ${player.attendance >= 90 ? 'bg-wts-green' : player.attendance >= 80 ? 'bg-yellow-500' : 'bg-red-500'
-                                                }`}
+                                            className={`h-full rounded-full ${player.attendance >= 90 ? 'bg-wts-green' : player.attendance >= 80 ? 'bg-yellow-500' : 'bg-red-500'}`}
                                             style={{ width: `${player.attendance}%` }}
                                         />
                                     </div>
-                                    <span className="text-[10px] font-bold text-white">{player.attendance}%</span>
+                                    <span className="text-[10px] font-bold text-white w-8 text-right">{player.attendance}%</span>
                                 </div>
                             </div>
                             <div className="col-span-2 flex items-center">
@@ -260,7 +266,7 @@ export default function SquadPage() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="col-span-1 flex items-center">
+                            <div className="col-span-1 flex items-center space-x-2">
                                 {player.preferred && (
                                     <span className="px-2 py-1 bg-wts-green/10 border border-wts-green/20 rounded text-[8px] font-bold text-wts-green uppercase tracking-widest">
                                         Pref
@@ -271,6 +277,6 @@ export default function SquadPage() {
                     ))}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }

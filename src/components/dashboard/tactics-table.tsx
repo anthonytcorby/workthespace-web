@@ -1,10 +1,12 @@
+import React from 'react';
 import { Player } from './tactics-board';
 import { Users } from 'lucide-react';
 import { getPlayerDisplayNames } from '@/lib/utils';
 import { setDragGhost } from '@/lib/drag-utils';
+import Image from 'next/image';
 
 interface TacticsTableProps {
-    squad: Array<{ id: number; name: string; number: number; position: string }>;
+    squad: Array<{ id: number; name: string; number: number; position: string; nationality: string }>;
     lineup: Record<number, number>;
     subs: Record<number, number>;
 }
@@ -22,7 +24,6 @@ export function TacticsTable({ squad, lineup, subs }: TacticsTableProps) {
                 </div>
                 <div>
                     <h3 className="text-lg font-bold text-white uppercase tracking-widest">Squad</h3>
-                    <p className="text-sm text-gray-500 uppercase font-mono">Drag to Pitch</p>
                 </div>
             </div>
 
@@ -46,20 +47,44 @@ export function TacticsTable({ squad, lineup, subs }: TacticsTableProps) {
                                         e.dataTransfer.setData('playerId', player.id.toString());
                                         setDragGhost(e, player.number, player.position);
                                     }}
-                                    className={`border-b border-white/5 last:border-0 transition-all cursor-grab active:cursor-grabbing group hover:bg-white/5 border-l-4 border-l-transparent hover:border-l-wts-green ${picked ? 'opacity-40 grayscale' : ''}`}
+                                    className={`border-b border-white/5 last:border-0 transition-all cursor-grab active:cursor-grabbing group hover:bg-white/5 border-l-4 border-l-transparent ${picked
+                                        ? 'border-l-wts-green bg-white/5'
+                                        : 'hover:border-l-wts-green'
+                                        }`}
                                 >
                                     <td className="py-4 pl-3">
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${player.position === 'GK' ? 'bg-yellow-400 text-black' : 'bg-wts-green/20 text-wts-green border border-wts-green/50'}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${player.position === 'GK'
+                                            ? 'bg-yellow-400 text-black'
+                                            : picked
+                                                ? 'bg-wts-green text-black'
+                                                : 'bg-white/5 text-gray-500 border border-white/10'
+                                            }`}>
                                             {player.number}
                                         </div>
                                     </td>
                                     <td className="py-4">
-                                        <span className="text-sm font-bold text-white group-hover:text-wts-green transition-colors">
-                                            {player.name}
-                                        </span>
+                                        <div className="flex items-center space-x-3">
+                                            {player.nationality && (
+                                                <div className={`relative w-5 h-3.5 rounded-sm overflow-hidden shadow-sm transition-opacity ${picked ? 'opacity-100' : 'opacity-40 group-hover:opacity-100'}`}>
+                                                    <Image
+                                                        src={`https://flagcdn.com/w40/${player.nationality}.png`}
+                                                        alt={player.nationality}
+                                                        fill
+                                                        className="object-cover"
+                                                        unoptimized
+                                                    />
+                                                </div>
+                                            )}
+                                            <span className={`text-sm font-bold transition-colors ${picked ? 'text-white' : 'text-gray-500 group-hover:text-white'}`}>
+                                                {player.name}
+                                            </span>
+                                        </div>
                                     </td>
                                     <td className="py-4 pr-3 text-right">
-                                        <span className={`text-xs font-mono font-bold px-3 py-1.5 rounded-md border text-gray-400 bg-white/5 border-white/5`}>
+                                        <span className={`text-xs font-mono font-bold px-3 py-1.5 rounded-md border ${picked
+                                            ? 'text-wts-green bg-wts-green/10 border-wts-green/20'
+                                            : 'text-gray-600 bg-white/5 border-white/5 group-hover:text-gray-400'
+                                            }`}>
                                             {player.position}
                                         </span>
                                     </td>

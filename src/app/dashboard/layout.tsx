@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-import { Trophy, Home, Users, Calendar, Wallet, Settings, Menu, Bell, ClipboardList, Table, Tv, MessageSquare } from 'lucide-react';
+import { Trophy, Home, Users, Calendar, Wallet, Settings, Menu, Bell, ClipboardList, Table, Tv, MessageSquare, Globe, UserPlus, Star } from 'lucide-react';
 import { useState } from 'react';
 
 export default function DashboardLayout({
@@ -15,16 +15,28 @@ export default function DashboardLayout({
     const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
     const pathname = usePathname();
 
-    const menuItems = [
-        { icon: Home, label: 'Dashboard', href: '/dashboard' },
-        { icon: Tv, label: 'Matchday', href: '/dashboard/matchday' },
-        { icon: Users, label: 'Squad', href: '/dashboard/squad' },
-        { icon: ClipboardList, label: 'Tactics', href: '/dashboard/tactics' },
-        { icon: Calendar, label: 'Fixtures', href: '/dashboard/fixtures' },
-        { icon: Table, label: 'Leagues', href: '/dashboard/leagues' },
-        { icon: Wallet, label: 'Fees', href: '/dashboard/fees' },
-        { icon: MessageSquare, label: 'Comms', href: '/dashboard/comms' },
-        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+    const menuGroups = [
+        [
+            { icon: Home, label: 'Dashboard', href: '/dashboard' }
+        ],
+        [
+            { icon: Tv, label: 'Matchday', href: '/dashboard/matchday' },
+            { icon: Users, label: 'Squad', href: '/dashboard/squad' },
+            { icon: ClipboardList, label: 'Tactics', href: '/dashboard/tactics' },
+        ],
+        [
+            { icon: Calendar, label: 'Fixtures', href: '/dashboard/fixtures' },
+            { icon: Table, label: 'Leagues', href: '/dashboard/leagues' },
+        ],
+        [
+            { icon: Wallet, label: 'Fees', href: '/dashboard/fees' },
+            { icon: MessageSquare, label: 'Comms', href: '/dashboard/comms' },
+        ],
+        [
+            { icon: Globe, label: 'Find a League', href: '/dashboard/find-league' },
+            { icon: UserPlus, label: 'Find a Player', href: '/dashboard/find-player' },
+            { icon: Star, label: 'Goal of the Week', href: '/dashboard/goal-of-week' },
+        ]
     ];
 
     return (
@@ -35,12 +47,12 @@ export default function DashboardLayout({
                     src={pathname === '/dashboard/tactics' ? "/tactics-bg.png" : "/dashboard-bg.png"}
                     alt="Dashboard Background"
                     fill
-                    className={`object-cover ${pathname === '/dashboard/tactics' ? 'opacity-60' : 'opacity-50'}`}
+                    className={`object-cover ${pathname === '/dashboard/tactics' ? 'opacity-90' : 'opacity-50'}`}
                     priority
                     quality={90}
                 />
                 <div className={`absolute inset-0 ${pathname === '/dashboard/tactics'
-                    ? 'bg-gradient-to-b from-black/80 via-black/50 to-black/80'
+                    ? 'bg-gradient-to-b from-black/40 via-black/10 to-black/40'
                     : 'bg-gradient-to-b from-black/20 via-black/10 to-black/60'
                     }`} />
             </div>
@@ -61,23 +73,45 @@ export default function DashboardLayout({
                     </div>
 
                     {/* Navigation */}
-                    <nav className="flex-1 px-4 space-y-2 py-4">
-                        {menuItems.map((item) => {
-                            const isActive = pathname === item.href;
-                            return (
-                                <Link
-                                    key={item.label}
-                                    href={item.href}
-                                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold tracking-widest uppercase transition-all group ${isActive
-                                        ? 'bg-wts-green text-black'
-                                        : 'text-gray-400 hover:text-white hover:bg-white/5'
-                                        }`}
-                                >
-                                    <item.icon size={20} />
-                                    <span>{item.label}</span>
-                                </Link>
-                            );
-                        })}
+                    <nav className="flex-1 px-4 space-y-2 py-4 flex flex-col">
+                        {menuGroups.map((group, groupIndex) => (
+                            <div key={groupIndex}>
+                                {group.map((item) => {
+                                    const isActive = pathname === item.href;
+                                    return (
+                                        <Link
+                                            key={item.label}
+                                            href={item.href}
+                                            className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold tracking-widest uppercase transition-all group mb-1 ${isActive
+                                                ? 'bg-wts-green text-black'
+                                                : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                                }`}
+                                        >
+                                            <item.icon size={20} />
+                                            <span>{item.label}</span>
+                                        </Link>
+                                    );
+                                })}
+                                {groupIndex < menuGroups.length - 1 && (
+                                    <div className="w-8 h-0.5 bg-wts-green/30 rounded-full mx-4 my-3" />
+                                )}
+                            </div>
+                        ))}
+
+                        {/* Settings at Bottom */}
+                        <div className="mt-auto pt-2">
+                            <div className="w-8 h-0.5 bg-wts-green/30 rounded-full mx-4 mb-3" />
+                            <Link
+                                href="/dashboard/settings"
+                                className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-bold tracking-widest uppercase transition-all group ${pathname === '/dashboard/settings'
+                                    ? 'bg-wts-green text-black'
+                                    : 'text-gray-400 hover:text-white hover:bg-white/5'
+                                    }`}
+                            >
+                                <Settings size={20} />
+                                <span>Settings</span>
+                            </Link>
+                        </div>
                     </nav>
 
                     {/* Bottom Profile */}
